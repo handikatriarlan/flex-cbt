@@ -21,6 +21,6 @@ class CourseQuestion extends Model
 
     public function answer()
     {
-        return $this->hasMany(CourseAnswer::class, 'question_id', 'id');
+        return $this->hasMany(CourseAnswer::class, 'course_question_id', 'id');
     }
 }
