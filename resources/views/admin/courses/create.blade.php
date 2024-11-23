@@ -173,9 +173,23 @@
                 <h1 class="font-extrabold text-[30px] leading-[45px]">New Course</h1>
                 <p class="text-[#7F8190]">Provide high quality for best students</p>
             </div>
-            <form class="flex flex-col gap-[30px] w-[500px] mx-[70px] mt-10">
+
+            @if ($errors->any())
+                <div class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg mb-4">
+                    <h3 class="font-semibold text-lg mb-2">Whoops! Something went wrong.</h3>
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('dashboard.courses.store') }}"
+                class="flex flex-col gap-[30px] w-[500px] mx-[70px] mt-10" enctype="multipart/form-data">
+                @csrf
                 <div class="flex gap-5 items-center">
-                    <input type="file" name="icon" id="icon" class="peer hidden"
+                    <input type="file" name="cover" id="icon" class="peer hidden"
                         onchange="previewFile()" data-empty="true" required>
                     <div
                         class="relative w-[100px] h-[100px] rounded-full overflow-hidden peer-data-[empty=true]:border-[3px] peer-data-[empty=true]:border-dashed peer-data-[empty=true]:border-[#EEEEEE]">
@@ -215,10 +229,14 @@
                         </div>
                         <select id="category"
                             class="pl-1 font-semibold focus:outline-none w-full text-[#0A090B] invalid:text-[#7F8190] invalid:font-normal appearance-none bg-[url('{{ asset('images/icons/arrow-down.svg') }}')] bg-no-repeat bg-right"
-                            name="category" required>
+                            name="category_id" required>
                             <option value="" disabled selected hidden>Choose one of category</option>
-                            <option value="a" class="font-semibold">Digital Marketing</option>
-                            <option value="b" class="font-semibold">Web Development</option>
+                            @forelse ($categories as $category)
+                                <option value="{{ $category->id }}" class="font-semibold">{{ $category->name }}
+                                </option>
+                            @empty
+                                <p>Tidak Ada Data Kategori.</p>
+                            @endforelse
                         </select>
                     </div>
                 </div>
@@ -308,8 +326,7 @@
                             class="pl-1 font-semibold focus:outline-none w-full text-[#0A090B] invalid:text-[#7F8190] invalid:font-normal appearance-none bg-[url('{{ asset('images/icons/arrow-down.svg') }}')] bg-no-repeat bg-right"
                             name="access" required>
                             <option value="" disabled selected hidden>Choose the access type</option>
-                            <option value="a" class="font-semibold">Digital Marketing</option>
-                            <option value="b" class="font-semibold">Web Development</option>
+                            <option value="Invitation Only" class="font-semibold">Invitation Only</option>
                         </select>
                     </div>
                 </div>
@@ -322,9 +339,9 @@
                     <a href=""
                         class="w-full h-[52px] p-[14px_20px] bg-[#0A090B] rounded-full font-semibold text-white transition-all duration-300 text-center">Add
                         to Draft</a>
-                    <a href="index.html"
+                    <button type="submit"
                         class="w-full h-[52px] p-[14px_20px] bg-[#6436F1] rounded-full font-bold text-white transition-all duration-300 hover:shadow-[0_4px_15px_0_#6436F14D] text-center">Save
-                        Course</a>
+                        Course</bu>
                 </div>
             </form>
         </div>
