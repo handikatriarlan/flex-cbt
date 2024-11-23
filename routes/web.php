@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('dashboard')->name('dashboard')->group(function () {
-        Route::resource('/courses', CourseController::class)
+        Route::resource('courses', CourseController::class)
             ->middleware('role:teacher');
 
         Route::get('/course/question/create/{course}', [CourseQuestionController::class, 'create'])
@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/course/question/save/{course}', [CourseQuestionController::class, 'store'])
             ->middleware('role:teacher')
             ->name('course.create.question.store');
-        Route::resource('/course-questions', CourseQuestionController::class)
+        Route::resource('course-questions', CourseQuestionController::class)
             ->middleware('role:teacher');
 
         Route::get('/course/students/show/{course}', [CourseStudentController::class, 'index'])
