@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LearningController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard')->name('dashboard')->group(function () {
         Route::resource('/courses', CourseController::class)->middleware('role:teacher');
+        Route::get('/learning', [LearningController::class, 'index'])->middleware('role:student')->name('learning.index');
     });
 });
 
