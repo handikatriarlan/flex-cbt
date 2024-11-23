@@ -12,8 +12,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        // return view('admin.courses.index');
-        return 'Hello Test';
+        return view('admin.courses.index');
     }
 
     /**
@@ -21,7 +20,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.courses.create');
     }
 
     /**
