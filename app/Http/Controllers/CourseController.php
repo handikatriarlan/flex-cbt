@@ -131,6 +131,18 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        try {
+            $course->delete();
+
+            return redirect()->route('dashboard.courses.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $error = ValidationException::withMessages([
+                'system_error' => ['System Error!' . $e->getMessage()],
+            ]);
+
+            throw $error;
+        }
     }
 }
