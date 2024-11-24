@@ -199,6 +199,18 @@
                     </div>
                 </div>
             </div>
+
+            @if ($errors->any())
+                <div class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg mb-4">
+                    <h3 class="font-semibold text-lg mb-2">Whoops! Something went wrong.</h3>
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form method="POST" action="{{ route('dashboard.course.create.question.store', $course) }}"
                 id="add-question" class="mx-[70px] mt-[30px] flex flex-col gap-5">
                 @csrf
@@ -231,16 +243,16 @@
                                     placeholder="Write better answer option" name="answers[]">
                             </div>
                             <label class="font-semibold flex items-center gap-[10px]"><input type="radio"
-                                    name="correct_answer"
+                                    value="{{ $i }}" name="correct_answer"
                                     class="w-[24px] h-[24px] appearance-none checked:border-[3px] checked:border-solid checked:border-white rounded-full checked:bg-[#2B82FE] ring ring-[#EEEEEE]" />
                                 Correct
                             </label>
                         </div>
                     @endfor
                 </div>
-                <a href="course-details.html"
+                <button type="submit"
                     class="w-[500px] h-[52px] p-[14px_20px] bg-[#6436F1] rounded-full font-bold text-white transition-all duration-300 hover:shadow-[0_4px_15px_0_#6436F14D] text-center">Save
-                    Question</a>
+                    Question</button>
             </form>
         </div>
     </section>
