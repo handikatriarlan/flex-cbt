@@ -226,7 +226,7 @@
                                     class="menu-dropdown w-[120px] max-h-[41px] overflow-hidden absolute top-0 p-[10px_16px] bg-white flex flex-col gap-3 border border-[#EEEEEE] transition-all duration-300 hover:shadow-[0_10px_16px_0_#0A090B0D] rounded-[18px]">
                                     <button onclick="toggleMaxHeight(this)"
                                         class="flex items-center justify-between font-bold text-sm w-full">
-                                        menu
+                                        Menu
                                         <img src="{{ asset('images/icons/arrow-down.svg') }}" alt="icon">
                                     </button>
                                     <a href="#"
@@ -237,7 +237,7 @@
                                         class="flex items-center justify-between font-bold text-sm w-full">
                                         Students
                                     </a>
-                                    <a href="course-details.html"
+                                    <a href="{{ route('dashboard.courses.edit', $course) }}"
                                         class="flex items-center justify-between font-bold text-sm w-full">
                                         Edit Course
                                     </a>
