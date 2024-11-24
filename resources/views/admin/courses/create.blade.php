@@ -14,7 +14,7 @@
         <div id="sidebar"
             class="w-[270px] flex flex-col shrink-0 min-h-screen justify-between p-[30px] border-r border-[#EEEEEE] bg-[#FBFBFB]">
             <div class="w-full flex flex-col gap-[30px]">
-                <a href="index.html" class="flex items-center justify-center">
+                <a href="{{ route('dashboard') }}" class="flex items-center justify-center">
                     <img src="{{ asset('images/logo/logo.svg') }}" alt="logo">
                 </a>
                 <ul class="flex flex-col gap-3">
@@ -103,7 +103,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="signin.html"
+                        <a href="{{ route('logout') }}"
                             class="p-[10px_16px] flex items-center gap-[14px] rounded-full h-11 transition-all duration-300 hover:bg-[#2B82FE]">
                             <div>
                                 <img src="{{ asset('images/icons/security-safe.svg') }}" alt="icon">
@@ -163,7 +163,7 @@
                 <div class="breadcrumb flex items-center gap-[30px]">
                     <a href="#" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Home</a>
                     <span class="text-[#7F8190] last:text-[#0A090B]">/</span>
-                    <a href="index.html" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Manage
+                    <a href="{{ route('dashboard.courses.index') }}" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Manage
                         Courses</a>
                     <span class="text-[#7F8190] last:text-[#0A090B]">/</span>
                     <a href="#" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold ">New Course</a>
