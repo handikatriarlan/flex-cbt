@@ -168,7 +168,10 @@
                     <a href="{{ route('dashboard.courses.index') }}"
                         class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Manage Courses</a>
                     <span class="text-[#7F8190] last:text-[#0A090B]">/</span>
-                    <a href="#" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Course Details</a>
+                    <a href="{{ route('dashboard.courses.show', $course) }}"
+                        class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Course Details</a>
+                    <span class="text-[#7F8190] last:text-[#0A090B]">/</span>
+                    <a href="#" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Edit Question</a>
                 </div>
             </div>
             <div class="header ml-[70px] pr-[70px] w-[940px] flex items-center justify-between mt-10">

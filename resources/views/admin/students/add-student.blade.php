@@ -161,14 +161,17 @@
             </div>
             <div class="flex flex-col gap-10 px-5 mt-5">
                 <div class="breadcrumb flex items-center gap-[30px]">
-                    <a href="{{ route('dashboard') }}" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Home</a>
+                    <a href="{{ route('dashboard') }}"
+                        class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Home</a>
                     <span class="text-[#7F8190] last:text-[#0A090B]">/</span>
-                    <a href="{{ route('dashboard.courses.index') }}" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Manage Courses</a>
+                    <a href="{{ route('dashboard.courses.index') }}"
+                        class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Manage Courses</a>
                     <span class="text-[#7F8190] last:text-[#0A090B]">/</span>
-                    <a href="{{ route('dashboard.courses.show', $course) }}" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Course Details</a>
+                    <a href="{{ route('dashboard.courses.show', $course) }}"
+                        class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Course Details</a>
                     <span class="text-[#7F8190] last:text-[#0A090B]">/</span>
-                    <a href="#" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Course
-                        Students</a>
+                    <a href="#" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Add
+                        Student</a>
                 </div>
             </div>
             <div class="header ml-[70px] pr-[70px] w-[940px] flex items-center justify-between mt-10">
@@ -199,7 +202,7 @@
                     </div>
                 </div>
             </div>
-            <form method="POST" action="{{ route('dashboard.course.course-students.store') }}" id="add-question" class="mx-[70px] mt-[30px] flex flex-col gap-5">
+            <form method="POST" id="add-question" class="mx-[70px] mt-[30px] flex flex-col gap-5">
                 @csrf
                 <h2 class="font-bold text-2xl">Add New Student</h2>
                 <div class="flex flex-col gap-[10px]">
