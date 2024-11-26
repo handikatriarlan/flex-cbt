@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\CourseStudent;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class CourseStudentController extends Controller
 {
@@ -32,9 +35,45 @@ class CourseStudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Course $course)
     {
-        //
+        $validated = $request->validate([
+            'email' => 'required|string',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            $error = ValidationException::withMessages([
+                'system_error' => ["Student's email not available"]
+            ]);
+            throw $error;
+        }
+
+        $isEnrolled = $course->students()->where('user_id', $user->id)->exists();
+        if ($isEnrolled) {
+            $error = ValidationException::withMessages([
+                'system_error' => ['Student already have this class access.']
+            ]);
+            throw $error;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $course->students()->attach($user->id);
+
+            DB::commit();
+
+            return redirect()->route('dashboard.course.course-students.index', $course);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $error = ValidationException::withMessages([
+                'system_error' => ['System Error!' . $e->getMessage()],
+            ]);
+
+            throw $error;
+        }
     }
 
     /**
