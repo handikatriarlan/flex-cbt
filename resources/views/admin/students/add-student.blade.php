@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="{{ asset('css/output.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
@@ -202,6 +203,18 @@
                     </div>
                 </div>
             </div>
+
+            @if ($errors->any())
+                <div class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg mb-4">
+                    <h3 class="font-semibold text-lg mb-2">Whoops! Something went wrong.</h3>
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form method="POST" action="{{ route('dashboard.course.course-students.store', $course) }}"
                 id="add-question" class="mx-[70px] mt-[30px] flex flex-col gap-5">
                 @csrf
