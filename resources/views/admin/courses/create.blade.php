@@ -175,13 +175,13 @@
             </div>
 
             @if ($errors->any())
-                <div class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg mb-4">
+                <div class="text-red-700 ps-8 pt-3 rounded-lg mt-2 ms-10">
                     <h3 class="font-semibold text-lg mb-2">Whoops! Something went wrong.</h3>
-                    <ul class="list-disc list-inside">
+                    <div class="space-y-2">
                         @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            <p class="text-sm">{{ $error }}</p>
                         @endforeach
-                    </ul>
+                    </div>
                 </div>
             @endif
 
