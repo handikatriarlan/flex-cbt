@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StudentAnswer;
+use App\Models\Course;
+use App\Models\CourseAnswer;
 use Illuminate\Http\Request;
+use App\Models\StudentAnswer;
+use App\Models\CourseQuestion;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class StudentAnswerController extends Controller
 {
@@ -26,9 +32,59 @@ class StudentAnswerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Course $course, $question)
     {
-        //
+        $question_details = CourseQuestion::where('id', $question)->first();
+
+        $validated = $request->validate([
+            'answer_id' => 'required|exists:course_answers,id',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $selectedAnswer = CourseAnswer::find($validated['answer_id']);
+
+            if ($selectedAnswer->course_question_id != $question) {
+                $error = ValidationException::withMessages([
+                    'system_error' => ['System Error!' . ['The Answer Not Available For This Question!']],
+                ]);
+
+                throw $error;
+            }
+
+            $existingAnswer = StudentAnswer::where('user_id', Auth::id())
+                ->where('course_question_id', $question)
+                ->first();
+
+            if ($existingAnswer) {
+                $error = ValidationException::withMessages([
+                    'system_error' => ['System Error!' . ['You Already Answer This Question Before!']],
+                ]);
+
+                throw $error;
+            }
+
+            $answerValue = $selectedAnswer->isCorrect() ? 'correct' : 'wrong';
+
+            StudentAnswer::create([
+                'user_id' => Auth::id(),
+                'course_question_id' => $question,
+                'answer' => $answerValue,
+            ]);
+
+            DB::commit();
+
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $error = ValidationException::withMessages([
+                'system_error' => ['System Error!' . $e->getMessage()],
+            ]);
+
+            throw $error;
+        }
     }
 
     /**
