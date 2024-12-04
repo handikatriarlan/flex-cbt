@@ -62,4 +62,29 @@ class LearningController extends Controller
             'question' => $currentQuestion,
         ]);
     }
+
+    public function learning_report(Course $course)
+    {
+        $userId = Auth::id();
+
+        $studentAnswers = StudentAnswer::with('question')
+            ->whereHas('question', function ($query) use ($course) {
+                $query->where('course_id', $course->id);
+            })->where('user_id', $userId)
+            ->get();
+
+        $totalQuestions = CourseQuestion::where('course_id', $course->id)->count();
+        $correctAnswersCount = $studentAnswers
+            ->where('answer', 'correct')
+            ->count();
+        $passed = $correctAnswersCount == $totalQuestions;
+
+        return view('student.courses.learning-report', [
+            'course' => $course,
+            'studentAnswers' => $studentAnswers,
+            'totalQuestions' => $totalQuestions,
+            'correctAnswersCount' => $correctAnswersCount,
+            'passed' => $passed,
+        ]);
+    }
 }
