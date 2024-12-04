@@ -63,6 +63,13 @@ class LearningController extends Controller
         ]);
     }
 
+    public function learning_finished(Course $course)
+    {
+        return view('student.courses.learning-finished', [
+            'course' => $course,
+        ]);
+    }
+
     public function learning_report(Course $course)
     {
         $userId = Auth::id();
