@@ -65,7 +65,7 @@ class StudentAnswerController extends Controller
                 throw $error;
             }
 
-            $answerValue = $selectedAnswer->isCorrect() ? 'correct' : 'wrong';
+            $answerValue = $selectedAnswer->is_correct ? 'correct' : 'wrong';
 
             StudentAnswer::create([
                 'user_id' => Auth::id(),
